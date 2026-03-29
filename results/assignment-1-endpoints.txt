@@ -1,0 +1,19 @@
+=== 1. Lambda ZIP ===
+Command: aws lambda invoke --function-name lsc-knn-zip ...
+Result:
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "74.789", "X-Instance-Id": "2026/03/29/[$LATEST]dcf6627b607847e4a8ab9a12241d4141", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 74.789, \"instance_id\": \"2026/03/29/[$LATEST]dcf6627b607847e4a8ab9a12241d4141\", \"cold_start\": true}"}
+
+=== 2. Lambda Container ===
+Command: aws lambda invoke --function-name lsc-knn-container ...
+Result:
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "84.923", "X-Instance-Id": "2026/03/29/[$LATEST]21fd5431a4be426ea524ed87a0025a5a", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 84.923, \"instance_id\": \"2026/03/29/[$LATEST]21fd5431a4be426ea524ed87a0025a5a\", \"cold_start\": true}"}
+
+=== 3. Fargate ===
+Command: curl -X POST ... http://lsc-knn-alb-1558279404.us-east-1.elb.amazonaws.com/search
+Result:
+{"instance_id":"ip-172-31-9-167.ec2.internal","query_time_ms":22.53,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}
+
+=== 4. EC2 ===
+Command: curl -X POST ... http://100.55.152.189:8080/search
+Result:
+{"instance_id":"d74ceb2c9682","query_time_ms":24.348,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}
